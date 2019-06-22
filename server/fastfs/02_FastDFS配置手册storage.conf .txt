@@ -1,0 +1,114 @@
+storage.conf配置文件分析：
+
+#同tracker.conf
+disabled=false
+ 
+#这个storage服务器属于那个group
+group_name=group1
+ 
+#同tracker.conf
+bind_addr=
+ 
+#连接其他服务器时是否绑定地址，bind_addr配置时本参数才有效
+client_bind=true
+ 
+#同tracker.conf
+port=23000
+connect_timeout=30
+network_timeout=60
+ 
+#主动向tracker发送心跳检测的时间间隔
+heart_beat_interval=30
+ 
+#主动向tracker发送磁盘使用率的时间间隔
+stat_report_interval=60
+ 
+#同tracker.conf
+base_path=/opt/fdfs
+max_connections=256
+ 
+#接收/发送数据的buff大小，必须大于8KB
+buff_size = 256KB
+ 
+#同tracker.conf
+work_threads=4
+ 
+#磁盘IO是否读写分离
+disk_rw_separated = true
+ 
+#是否直接读写文件，默认关闭
+disk_rw_direct = false
+ 
+#混合读写时的读写线程数
+disk_reader_threads = 1
+disk_writer_threads = 1
+ 
+#同步文件时如果binlog没有要同步的文件，则延迟多少毫秒后重新读取，0表示不延迟
+sync_wait_msec=50
+ 
+#同步完一个文件后间隔多少毫秒同步下一个文件，0表示不休息直接同步
+sync_interval=0
+ 
+#表示这段时间内同步文件
+sync_start_time=00:00
+sync_end_time=23:59
+ 
+#同步完多少文件后写mark标记
+write_mark_file_freq=500
+ 
+#storage在存储文件时支持多路径，默认只设置一个
+store_path_count=1
+ 
+#配置多个store_path路径，从0开始，如果store_path0不存在，则base_path必须存在
+store_path0=/opt/fdfs
+#store_path1=/opt/fastdfs2
+ 
+#subdir_count  * subdir_count个目录会在store_path下创建，采用两级存储
+subdir_count_per_path=256
+ 
+#设置tracker_server
+tracker_server=x.x.x.x:22122
+ 
+#同tracker.conf
+log_level=info
+run_by_group=
+run_by_user=
+allow_hosts=*
+ 
+#文件在数据目录下的存放策略，0:轮训 1:随机
+file_distribute_path_mode=0
+ 
+#当问及是轮训存放时，一个目录下可存放的文件数目
+file_distribute_rotate_count=100
+ 
+#写入多少字节后就开始同步，0表示不同步
+fsync_after_written_bytes=0
+ 
+#刷新日志信息到disk的间隔
+sync_log_buff_interval=10
+ 
+#同步storage的状态信息到disk的间隔
+sync_stat_file_interval=300
+ 
+#线程栈大小
+thread_stack_size=512KB
+ 
+#设置文件上传服务器的优先级，值越小越高
+upload_priority=10
+ 
+#是否检测文件重复存在，1:检测 0:不检测
+check_file_duplicate=0
+ 
+#当check_file_duplicate设置为1时，次值必须设置
+key_namespace=FastDFS
+ 
+#与FastDHT建立连接的方式 0:短连接 1:长连接
+keep_alive=0
+ 
+#同tracker.conf
+http.disabled=false
+http.domain_name=
+http.server_port=8888
+http.trunk_size=256KB
+http.need_find_content_type=true
+##include http.conf

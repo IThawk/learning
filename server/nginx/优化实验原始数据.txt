@@ -1,0 +1,609 @@
+
+只测nginx
+
+[root@localhost bench]# /usr/local/httpd/bin/ab  -rc 10000 -n 500000 -k http://192.168.1.202/test.php
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+Completed 50000 requests
+Completed 100000 requests
+Completed 150000 requests
+Completed 200000 requests
+Completed 250000 requests
+Completed 300000 requests
+Completed 350000 requests
+Completed 400000 requests
+Completed 450000 requests
+Completed 500000 requests
+Finished 500000 requests
+
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /test.php
+Document Length:        10 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   155.675 seconds
+Complete requests:      500000
+Failed requests:        10118
+   (Connect: 0, Receive: 0, Length: 10116, Exceptions: 2)
+Write errors:           0
+Non-2xx responses:      10114
+Keep-Alive requests:    0
+Total transferred:      80719571 bytes
+HTML transferred:       6855858 bytes
+Requests per second:    3211.83 [#/sec] (mean)
+Time per request:       3113.494 [ms] (mean)
+Time per request:       0.311 [ms] (mean, across all concurrent requests)
+Transfer rate:          506.36 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:      847 1259 121.9   1260    2316
+Processing:   736 1829 727.9   1544   17191
+Waiting:        0 1433 710.3   1180   16621
+Total:       1740 3088 726.5   2828   18423
+
+Percentage of the requests served within a certain time (ms)
+  50%   2828
+  66%   2972
+  75%   3137
+  80%   3229
+  90%   4081
+  95%   4170
+  98%   5889
+  99%   6058
+ 100%  18423 (longest request)
+
+
+ nginx+php
+[root@localhost bench]# /usr/local/httpd/bin/ab  -rc 10000 -n 500000 -k http://192.168.1.202/test.php
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+Completed 50000 requests
+Completed 100000 requests
+Completed 150000 requests
+Completed 200000 requests
+Completed 250000 requests
+Completed 300000 requests
+Completed 350000 requests
+Completed 400000 requests
+Completed 450000 requests
+Completed 500000 requests
+Finished 500000 requests
+
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /test.php
+Document Length:        10 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   155.675 seconds
+Complete requests:      500000
+Failed requests:        10118
+   (Connect: 0, Receive: 0, Length: 10116, Exceptions: 2)
+Write errors:           0
+Non-2xx responses:      10114
+Keep-Alive requests:    0
+Total transferred:      80719571 bytes
+HTML transferred:       6855858 bytes
+Requests per second:    3211.83 [#/sec] (mean)
+Time per request:       3113.494 [ms] (mean)
+Time per request:       0.311 [ms] (mean, across all concurrent requests)
+Transfer rate:          506.36 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:      847 1259 121.9   1260    2316
+Processing:   736 1829 727.9   1544   17191
+Waiting:        0 1433 710.3   1180   16621
+Total:       1740 3088 726.5   2828   18423
+
+Percentage of the requests served within a certain time (ms)
+  50%   2828
+  66%   2972
+  75%   3137
+  80%   3229
+  90%   4081
+  95%   4170
+  98%   5889
+  99%   6058
+ 100%  18423 (longest request)
+[root@localhost bench]# /usr/local/httpd/bin/ab  -rc 10000 -n 500000 -k http://192.168.1.202/test.php
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+^C
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /test.php
+Document Length:        10 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   6.798 seconds
+Complete requests:      17770
+Failed requests:        11123
+   (Connect: 0, Receive: 0, Length: 11123, Exceptions: 0)
+Write errors:           0
+Non-2xx responses:      11123
+Keep-Alive requests:    0
+Total transferred:      5186501 bytes
+HTML transferred:       2215876 bytes
+Requests per second:    2613.90 [#/sec] (mean)
+Time per request:       3825.708 [ms] (mean)
+Time per request:       0.383 [ms] (mean, across all concurrent requests)
+Transfer rate:          745.03 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:      883 1065 140.6   1032    1959
+Processing:  1122 1444 309.4   1358    2763
+Waiting:      207  850 401.0    794    2328
+Total:       2010 2509 360.7   2452    4520
+
+Percentage of the requests served within a certain time (ms)
+  50%   2452
+  66%   2530
+  75%   2586
+  80%   2624
+  90%   2786
+  95%   3518
+  98%   3755
+  99%   3836
+ 100%   4520 (longest request)
+
+
+
+nginx->php->mysql(未优化,请求到1半时断开,速度太慢)
+[root@localhost bench]# /usr/local/httpd/bin/ab  -rc 10000 -n 500000 -k http://192.168.1.202/phptomysql.php
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+Completed 50000 requests
+Completed 100000 requests
+Completed 150000 requests
+Completed 200000 requests
+Completed 250000 requests
+^C
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /phptomysql.php
+Document Length:        192 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   534.077 seconds
+Complete requests:      258750
+Failed requests:        245407
+   (Connect: 0, Receive: 0, Length: 244705, Exceptions: 702)
+Write errors:           0
+Non-2xx responses:      18167
+Keep-Alive requests:    0
+Total transferred:      126584417 bytes
+HTML transferred:       88546880 bytes
+Requests per second:    484.48 [#/sec] (mean)
+Time per request:       20640.639 [ms] (mean)
+Time per request:       2.064 [ms] (mean, across all concurrent requests)
+Transfer rate:          231.46 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0  220 287.7    139    1369
+Processing:     0 19266 33073.9   3751  302998
+Waiting:        0 19197 33101.1   3679  302998
+Total:          0 19487 33049.6   4022  303348
+
+Percentage of the requests served within a certain time (ms)
+  50%   4022
+  66%  11889
+  75%  18540
+  80%  31312
+  90%  68717
+  95%  90305
+  98%  124679
+  99%  149318
+ 100%  303348 (longest request)
+
+
+ nginx+php+mysql(参数优化过)
+[root@localhost bench]# /usr/local/httpd/bin/ab  -rc 10000 -n 500000 -k http://192.168.1.202/phptomysql.php
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+Completed 50000 requests
+Completed 100000 requests
+Completed 150000 requests
+Completed 200000 requests
+Completed 250000 requests
+Completed 300000 requests
+Completed 350000 requests
+Completed 400000 requests
+Completed 450000 requests
+Completed 500000 requests
+Finished 500000 requests
+
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /phptomysql.php
+Document Length:        192 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   182.749 seconds
+Complete requests:      500000
+Failed requests:        488956
+   (Connect: 0, Receive: 0, Length: 488954, Exceptions: 2)
+Write errors:           0
+Non-2xx responses:      11463
+Keep-Alive requests:    0
+Total transferred:      124576818 bytes
+HTML transferred:       50743905 bytes
+Requests per second:    2735.99 [#/sec] (mean)
+Time per request:       3654.990 [ms] (mean)
+Time per request:       0.365 [ms] (mean, across all concurrent requests)
+Transfer rate:          665.70 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:      801 1201 102.3   1210    2201
+Processing:   638 2383 1925.2   1829   68481
+Waiting:        0 2024 1938.2   1484   68163
+Total:       1617 3584 1921.2   3021   69649
+
+Percentage of the requests served within a certain time (ms)
+  50%   3021
+  66%   3735
+  75%   3916
+  80%   3983
+  90%   5688
+  95%   5839
+  98%   6088
+  99%   9804
+ 100%  69649 (longest request)
+
+环境同上,5000并发(90%的响应在2秒内)
+[root@localhost bench]# /usr/local/httpd/bin/ab  -rc 5000 -n 500000 -k http://192.168.1.202/phptomysql.php 
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+Completed 50000 requests
+Completed 100000 requests
+Completed 150000 requests
+Completed 200000 requests
+Completed 250000 requests
+Completed 300000 requests
+Completed 350000 requests
+Completed 400000 requests
+Completed 450000 requests
+Completed 500000 requests
+Finished 500000 requests
+
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /phptomysql.php
+Document Length:        90 bytes
+
+Concurrency Level:      5000
+Time taken for tests:   174.754 seconds
+Complete requests:      500000
+Failed requests:        464964
+   (Connect: 0, Receive: 0, Length: 464964, Exceptions: 0)
+Write errors:           0
+Keep-Alive requests:    0
+Total transferred:      123063679 bytes
+HTML transferred:       49563385 bytes
+Requests per second:    2861.16 [#/sec] (mean)
+Time per request:       1747.540 [ms] (mean)
+Time per request:       0.350 [ms] (mean, across all concurrent requests)
+Transfer rate:          687.71 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0  373 104.5    385    1393
+Processing:   141 1340 3011.1    627   75581
+Waiting:      137 1233 3011.8    522   75481
+Total:        147 1713 3010.3   1017   75924
+
+Percentage of the requests served within a certain time (ms)
+  50%   1017
+  66%   1115
+  75%   1313
+  80%   1980
+  90%   2284
+  95%   4064
+  98%   8040
+  99%  15881
+ 100%  75924 (longest request)
+
+
+
+nginx+php+mysql+memcached
+[root@localhost bench]# /usr/local/httpd/bin/ab  -rc 10000 -n 500000 -k http://192.168.1.202/php2my2mem.php
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+Completed 50000 requests
+Completed 100000 requests
+Completed 150000 requests
+Completed 200000 requests
+Completed 250000 requests
+Completed 300000 requests
+Completed 350000 requests
+Completed 400000 requests
+Completed 450000 requests
+Completed 500000 requests
+Finished 500000 requests
+
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /php2my2mem.php
+Document Length:        192 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   379.399 seconds
+Complete requests:      500000
+Failed requests:        474689
+   (Connect: 0, Receive: 19, Length: 463672, Exceptions: 10998)
+Write errors:           0
+Non-2xx responses:      36463
+Keep-Alive requests:    0
+Total transferred:      123956599 bytes
+HTML transferred:       51909035 bytes
+Requests per second:    1317.87 [#/sec] (mean)
+Time per request:       7587.977 [ms] (mean)
+Time per request:       0.759 [ms] (mean, across all concurrent requests)
+Transfer rate:          319.06 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   84 212.0      4    1364
+Processing:     0 7274 12511.9   1564  240267
+Waiting:        0 7246 12521.5   1548  240267
+Total:          0 7358 12521.2   1698  240270
+
+Percentage of the requests served within a certain time (ms)
+  50%   1698
+  66%   3901
+  75%   7626
+  80%  14782
+  90%  28494
+  95%  31439
+  98%  42820
+  99%  61790
+ 100%  240270 (longest request)
+
+
+通过"上上张表"对比,memcached使50%的请求变快了,但是一部分,反倒慢了.
+原因在于--PHP->memcached也要建立tcp连接,代价挺高,
+但缓存了数据之后,就省去了mysql的查询时间.
+
+总结: memcached适合存复杂的sql,尤其是连接查询/模糊查询的sql结果
+
+
+
+[root@localhost bench]# /usr/local/httpd/bin/ab  -rc 10000 -n 500000 -k http://192.168.1.202/php2my2mem.php
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+Completed 50000 requests
+Completed 100000 requests
+Completed 150000 requests
+Completed 200000 requests
+Completed 250000 requests
+Completed 300000 requests
+Completed 350000 requests
+Completed 400000 requests
+Completed 450000 requests
+Completed 500000 requests
+Finished 500000 requests
+
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /php2my2mem.php
+Document Length:        192 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   378.964 seconds
+Complete requests:      500000
+Failed requests:        470534
+   (Connect: 0, Receive: 0, Length: 458878, Exceptions: 11656)
+Write errors:           0
+Non-2xx responses:      41192
+Keep-Alive requests:    0
+Total transferred:      124483775 bytes
+HTML transferred:       52345541 bytes
+Requests per second:    1319.39 [#/sec] (mean)
+Time per request:       7579.281 [ms] (mean)
+Time per request:       0.758 [ms] (mean, across all concurrent requests)
+Transfer rate:          320.79 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0  155 251.2     47    2075
+Processing:     0 7157 12304.4   1571  165103
+Waiting:        0 7107 12316.4   1548  165102
+Total:          0 7312 12321.0   1860  165558
+
+Percentage of the requests served within a certain time (ms)
+  50%   1860
+  66%   4016
+  75%   7763
+  80%  14767
+  90%  28089
+  95%  31470
+  98%  33662
+  99%  61546
+ 100%  165558 (longest request)
+
+
+
+
+===========测试3000个并发(最初目标1500并发)========
+[root@localhost bench]# /usr/local/httpd/bin/ab  -rc 3000 -n 300000 -k http://192.168.1.202/php2my2mem.php 
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+Completed 30000 requests
+Completed 60000 requests
+Completed 90000 requests
+Completed 120000 requests
+Completed 150000 requests
+Completed 180000 requests
+Completed 210000 requests
+Completed 240000 requests
+Completed 270000 requests
+Completed 300000 requests
+Finished 300000 requests
+
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /php2my2mem.php
+Document Length:        96 bytes
+
+Concurrency Level:      3000
+Time taken for tests:   258.550 seconds
+Complete requests:      300000
+Failed requests:        282897
+   (Connect: 0, Receive: 0, Length: 282897, Exceptions: 0)
+Write errors:           0
+Keep-Alive requests:    0
+Total transferred:      73954512 bytes
+HTML transferred:       29854512 bytes
+Requests per second:    1160.32 [#/sec] (mean)
+Time per request:       2585.496 [ms] (mean)
+Time per request:       0.862 [ms] (mean, across all concurrent requests)
+Transfer rate:          279.33 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    3  22.9      1     278
+Processing:     2 2450 5498.0    526  101380
+Waiting:        2 2449 5498.0    526  101380
+Total:          2 2453 5501.9    527  101562
+
+Percentage of the requests served within a certain time (ms)
+  50%    527
+  66%   1391
+  75%   1585
+  80%   3275
+  90%   7335
+  95%  15003
+  98%  16595
+  99%  31004
+ 100%  101562 (longest request)
+
+
+
+
+ ==========测试1500个并发(90%的请求<2秒,符合我们的预期)======
+ [root@localhost bench]# /usr/local/httpd/bin/ab  -rc 1500 -n 150000 -k http://192.168.1.202/php2my2mem.php 
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.202 (be patient)
+Completed 15000 requests
+Completed 30000 requests
+Completed 45000 requests
+Completed 60000 requests
+Completed 75000 requests
+Completed 90000 requests
+Completed 105000 requests
+Completed 120000 requests
+Completed 135000 requests
+Completed 150000 requests
+Finished 150000 requests
+
+
+Server Software:        nginx/1.2.7
+Server Hostname:        192.168.1.202
+Server Port:            80
+
+Document Path:          /php2my2mem.php
+Document Length:        93 bytes
+
+Concurrency Level:      1500
+Time taken for tests:   136.769 seconds
+Complete requests:      150000
+Failed requests:        140670
+   (Connect: 0, Receive: 0, Length: 140670, Exceptions: 0)
+Write errors:           0
+Keep-Alive requests:    0
+Total transferred:      36995777 bytes
+HTML transferred:       14945777 bytes
+Requests per second:    1096.74 [#/sec] (mean)
+Time per request:       1367.690 [ms] (mean)
+Time per request:       0.912 [ms] (mean, across all concurrent requests)
+Transfer rate:          264.16 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    2  12.1      1     146
+Processing:     2 1235 3431.0    474   91020
+Waiting:        2 1235 3431.1    473   91020
+Total:          2 1237 3433.0    475   91120
+
+Percentage of the requests served within a certain time (ms)
+  50%    475
+  66%    562
+  75%    629
+  80%   1315
+  90%   1764
+  95%   3718
+  98%   8281
+  99%  15538
+ 100%  91120 (longest request)
+
+
+
+
+问题:--------
+memecached的存取速度快,但tcp连接的时间消耗就成为主要因素.
+如果还有现高的要求-->memcached连接池,模仿java的数据库连接池.
+这对于PHP运行特点,需要有专门第3方的扩展,PHP本身不行.
+
+
