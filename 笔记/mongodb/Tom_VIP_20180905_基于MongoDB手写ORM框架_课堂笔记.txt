@@ -1,0 +1,57 @@
+为什么要手写？
+1、结合业务场景，需要手写，解放 双手。
+2、我今天在课堂手写，告诉大家实现思想及原理。
+   （以便于大家以后装B成功）
+3、更好地监控、统一管理和维护（可控性更强）。
+
+JDBC
+单表操作不需要写SQL
+所有类都继承Support，我能更好把控或者优化代码
+不仅写了JDBC、Redis、MongoDB、ElasticSearch、Hive、HBase ...
+------------------
+推行非常便捷，统一风格给整个团队带来一种幸福感爆棚
+1、所有的API，我都统一，而且我会进行统一的培训。
+2、降低团队的学习成本，只需要一个人学会，那么整个团队就都学会了。
+
+Page selectForPage(QueryRule)
+List selectForPage(QueryRule)
+T selectForPage(QueryRule)
+
+insert(T)
+update(T)
+delete(T)
+
+
+爱学习的人，只要来和我交流，我都会倾囊相授。
+
+
+
+实现思路：
+入口类，所有Dao都继承它
+abstract BaseDaoSupport<T,PK>  T,PK(解决强制转型的问题)
+
+Page<T>   pageNo pageSize  data
+
+查询条件  QueryRule   查询规则 相当于拼接查询条件
+查询条件个性化封装  QueryRuleBulider
+
+------------------
+
+实体类的解析(反射)
+EntiyOperation
+
+
+总数量超过200亿。
+ELK，实现非侵入式的监控
+------------------
+Hash槽
+哨兵机制
+分布式实现原理
+------------------
+下次课，
+MongoDB实战：
+支持在线上传、下载、预览等功能
+GirdFS
+-------------------
+MongoDB在日常使用中用得最多是用来存储日志
+

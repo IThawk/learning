@@ -1,0 +1,114 @@
+﻿MongoDB VIP课程安排
+
+一、MongoDB的应用场景及实现原理
+二、MongoDB的常用命令及配置
+三、手写基于MongoDB的ORM框架
+四、基于MongoDB实现网络云盘实战
+五、MongoDB高可用实战及V4.0新特性
+
+
+MongoDB服务器环境基本配置
+
+MongoDB命令怎么学？
+记住用help
+有些人，自认为很聪明，他就回去猜（就会按自己的习惯去猜）
+
+直接drop()，就这样没有了
+不靠谱
+
+定位：缓存而已（如果把安全性非常高数据库不靠谱）
+
+
+CRUD案例演示
+
+如何使用Java API调用Mongo服务？
+
+
+总结：
+1、有事没事，看第一手文档，官方文档
+2、当你走投无路的时候记得用help（救命）
+3、让认为自己聪明，锻炼猜的能力，猜出个80%左右
+
+
+作业：
+1、CRUD操作，自己要去玩一遍
+2、用Java API 再去CRUD操作一遍
+
+
+20分钟提问时间
+1、老师怎么配置mongdb在centos启动时就默认启动?
+   利用网络资源（关键是思路）
+   
+2、老师怎么配置mongdb在centos启动时就默认启动
+   用户行为数据，数据量非常大
+   有一种后悔的感觉，想着更换平台
+   迁移会遇到一些问题
+   不要滥用，不要滥用，不要滥用
+   
+   
+它是一个最像关系型数据库的非关系型数据库（给数据操作带来便利）   
+
+
+3、Mongo和ES对比
+
+有elasticsearch 纯粹的是json（字符串）
+
+mongo的优势是哪些
+
+BSON    GirdFS(复杂)
+
+
+4、用户手机注册验证码存取适合用mongo吗？还是redis? 
+   建议用Seesion，用Redis过时时间，不推荐用MongoDB
+
+5、MongoDB应用场景
+系统操作日志 可以的
+那什么情况下适合mongo： 
+	不规则日志：ELK， Log4J INFO，ERROR，WARN,DEBUG(字符串？)
+	Pattern，用正则去解析字符串，不止一个正则，
+			 每一种日志格式都要编写一个正则去匹配
+	既然用正则麻烦，为什么还用ELK存储日志
+	你的系统已经平稳运行N年了（.Net，PHP、Java）
+适合mongoDB：						
+	规则日志：MongoDB，结构化的整理，
+				用户行为日志 operationTime creator type target
+				Timline，调用链路 invoker Time  targetMethod  args  returnVal throws
+					 
+	持续增量（id + UpdateTime）
+	
+	文件存储：GirdFS（文件存储系统）
+			
+不适合Reids：数据需要持久性的而且有一定的依赖性			
+适合Redis：数据会设置时效
+		  分布式锁
+		  用户登录token
+		  数据库缓存中间件
+			 
+6、能讲讲MongoDB（GridFS）、Hadoop、HBase对于数据存储得使用场景选择吗？
+	定位：
+	MongoDB，为一个结构化的缓存，由于设计原理不同，数据量是一定的瓶颈的。
+	HBase ，基于列簇扩展性，高可用程度会更加灵活，数量级和MongoDB也是有很大差异的。
+	
+	HBase 通常会跟大数据联系在一起
+	MongoDB 顶多算是一个日志数据库，文件存储系统
+	
+7、Mongo怎么持久化的？
+   持久化都是用文件的形式存储，其实任何数据库都是用文件实现持久化的	
+
+
+
+
+
+
+
+					 
+					 
+					 
+					 
+					 
+					 
+					 
+					 
+					 
+					 
+

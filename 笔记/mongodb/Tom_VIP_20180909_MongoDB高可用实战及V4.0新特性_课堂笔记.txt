@@ -1,0 +1,122 @@
+﻿MongoDB高可用实战
+
+一、分布式下的高可用（集群）
+cluster
+
+dbpath=/opt/mymongo/master-slave/data
+logpath=/opt/mymongo/master-slave/log/mongodb.log
+logappend=true
+fork=true
+bind_ip=0.0.0.0
+port=27017
+replSet=replSet02
+
+
+cfg={_id:"replSet02",members:[
+{_id:0,host:'192.168.102.128:27017',priority:9},
+{_id:1,host:'192.168.102.129:27017',priority:1},
+{_id:2,host:'192.168.102.130:27017',arbiterOnly:true}]};
+
+
+
+学习本堂课之前，你一定要了解
+
+1、什么是分布式？
+2、分布式解决什么问题
+3、本堂课是MongoDB最后一节，把前四节看完
+   知道MongoDB是干嘛的
+
+否则，你会懵逼
+
+
+伪分布式,用端口区分：
+
+数据副本集：  27001/27002/27003  replSet01
+配置副本集：  28001/28002/28003  configsvrs
+路由服务器：  30000
+
+
+dbpath=/opt/mymongo/shardsvr/shardsvr1/data
+logpath=/opt/mymongo/shardsvr/shardsvr1/log/mongodb.log
+logappend=true
+fork=true
+bind_ip=0.0.0.0
+port=27001
+replSet=replSet01
+shardsvr=true
+
+
+
+
+cfg={_id:"shardsvrs",members:[
+{_id:0,host:'127.0.0.1:27001'},
+{_id:1,host:'127.0.0.1:27002'},
+{_id:2,host:'127.0.0.1:27003'}]};
+
+
+cfg={_id:"replSet01",members:[
+{_id:0,host:'192.168.102.128:27017'},
+{_id:1,host:'192.168.102.129:27017'},
+{_id:2,host:'192.168.102.130:27017'}]};
+
+
+dbpath=/opt/mymongo/configsvr/configsvr1/data
+configsvr=true
+port=28001
+fork=true
+logpath=/opt/mymongo/configsvr/configsvr1/log/mongodb.log
+replSet=configrs
+logappend=true
+bind_ip=0.0.0.0
+
+
+cfg={_id:"configsvrs",members:[
+{_id:0,host:'127.0.0.1:28001'},
+{_id:1,host:'127.0.0.1:28002'},
+{_id:2,host:'127.0.0.1:28003'}]};
+
+
+configdb=configrs/127.0.0.1:28001,127.0.0.1:28002,127.0.0.1:28003
+port=30000
+fork=true
+logpath=/opt/mymongo/routesvr/log/mongodb.log
+logappend=true
+bind_ip=0.0.0.0
+
+
+
+sh.addShard("shardsvrs/127.0.0.1:27001");
+
+
+二、MongoDB 4.0开始新特性
+1、取消了M-S-S 的模式，只支持 M-A-S，不常用
+2、副本集集群混合模式  mongos 调度， configsvr存储所有的配信息， shardsvr存储具体数据。
+   对数据进行分片，还有待研究。
+3、开始支持事务，但是目前不支持跨库事务。
+   要使用MongoDB V4.0的事务，必须使用Java API 3.8+才支持实务操作。
+    据说接下来的版本，要支持跨库事务，也就是分布式事务。
+4、MongoDB V4.0可以支持失效时间
+
+
+分布式集群：
+一个集群下面一般都是奇数机器，最少3台（2N + 1）
+选举一个Leader	
+
+
+
+传统的关系型数据库才考虑ACID
+直接用程序解决
+
+请问所有的数据库都对acid有权衡和放弃，
+才形成了不同种的数据库，
+请 分析下市面常见数据库对acid的考量
+
+
+
+1.数据量到什么量级采用分片
+  当你感觉查询性能需要提升的时候
+2.由不分片状态，怎么改造到分片状态
+  只能做数据迁移，在迁移以前重新制定分片规则
+  
+  
+    
